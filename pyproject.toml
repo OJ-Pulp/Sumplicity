@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sumplicity"
+version = "0.1.0"
+description = "Transparent, vectorized NumPy implementations of classical extractive summarization algorithms."
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [
+  { name = "Osiris J. Terry", email = "osiris.terry.4@au.af.edu" },
+  { name = "Christine M. Schubert Kabban" },
+  { name = "Kenneth M. Hopkinson" },
+]
+requires-python = ">=3.9"
+dependencies = ["numpy>=1.22", "nltk>=3.8"]
+keywords = ["summarization", "extractive summarization", "NLP", "TextRank", "LexRank", "bag-of-words", "RAG"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Text Processing :: Linguistic",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Intended Audience :: Science/Research",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+benchmark = ["sumy", "rouge-score", "datasets"]
+
+[project.urls]
+Homepage = "https://github.com/YOUR-USERNAME/sumplicity"
+Issues = "https://github.com/YOUR-USERNAME/sumplicity/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]

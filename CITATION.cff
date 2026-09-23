@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Sumplicity: Transparent, vectorized extractive summarization in Python"
+version: 0.1.0
+date-released: 2026-09-22
+license: MIT
+repository-code: "https://github.com/YOUR-USERNAME/sumplicity"
+authors:
+  - family-names: Terry
+    given-names: Osiris J.
+    affiliation: Air Force Institute of Technology
+    # orcid: "https://orcid.org/0000-0000-0000-0000"
+  - family-names: Schubert Kabban
+    given-names: Christine M.
+    affiliation: Air Force Institute of Technology
+  - family-names: Hopkinson
+    given-names: Kenneth M.
+    affiliation: Air Force Institute of Technology
+keywords: [summarization, extractive summarization, natural language processing, TextRank, LexRank]
