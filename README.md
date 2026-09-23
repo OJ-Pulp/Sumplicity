@@ -1,6 +1,5 @@
 # Sumplicity
 
-[![tests](https://github.com/YOUR-USERNAME/sumplicity/actions/workflows/tests.yml/badge.svg)](https://github.com/YOUR-USERNAME/sumplicity/actions/workflows/tests.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 **Sumplicity** (from *Sumy* to *Simplicity*) is a small, transparent Python library
