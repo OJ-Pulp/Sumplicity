@@ -4,12 +4,12 @@ title: "Sumplicity: Transparent, vectorized extractive summarization in Python"
 version: 0.1.0
 date-released: 2026-09-22
 license: MIT
-repository-code: "https://github.com/YOUR-USERNAME/sumplicity"
+repository-code: "https://github.com/OJ-Pulp/sumplicity"
 authors:
   - family-names: Terry
     given-names: Osiris J.
     affiliation: Air Force Institute of Technology
-    # orcid: "https://orcid.org/0000-0000-0000-0000"
+    orcid: "https://orcid.org/0009-0004-4453-2874"
   - family-names: Schubert Kabban
     given-names: Christine M.
     affiliation: Air Force Institute of Technology
