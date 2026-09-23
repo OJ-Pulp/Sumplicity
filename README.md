@@ -82,7 +82,7 @@ pytest
 
 ## Citing
 
-If you use Sumplicity in research, please cite this repository of the academic
+If you use Sumplicity in research, please cite using [CITATION.cff](CITATION.cff)
 
 ## Contributing and support
 
