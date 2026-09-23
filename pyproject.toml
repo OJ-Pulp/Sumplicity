@@ -14,7 +14,7 @@ authors = [
   { name = "Kenneth M. Hopkinson" },
 ]
 requires-python = ">=3.9"
-dependencies = ["numpy>=1.22", "nltk>=3.8"]
+dependencies = ["numpy>=1.22", "nltk>=3.9"]
 keywords = ["summarization", "extractive summarization", "NLP", "TextRank", "LexRank", "bag-of-words", "RAG"]
 classifiers = [
   "Programming Language :: Python :: 3",
@@ -34,3 +34,6 @@ Issues = "https://github.com/YOUR-USERNAME/sumplicity/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+sumplicity = ["data/**/*"]

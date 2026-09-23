@@ -5,8 +5,6 @@ import sumplicity
 from sumplicity import get_all_summarizer, preprocessor
 from sumplicity._math import cos_sim_mat, markov_chain, overlap_sim_mat
 
-sumplicity.ensure_nltk_data()
-
 TEXT = (
     "The river flooded the valley after three days of heavy rain. "
     "Emergency crews evacuated residents from the flooded valley towns. "

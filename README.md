@@ -24,12 +24,10 @@ Included algorithms:
 
 ```bash
 pip install git+https://github.com/YOUR-USERNAME/sumplicity.git
-python -c "import sumplicity; sumplicity.ensure_nltk_data()"   # one-time NLTK data download
 ```
 
-Offline machines: download the NLTK `punkt`, `punkt_tab` and `stopwords` resources
-elsewhere, copy them to a directory, and call `nltk.data.path.append("<dir>")`
-before importing Sumplicity.
+The NLTK data Sumplicity needs (`stopwords` and the English `punkt_tab` tokenizer)
+ships inside the package, so no download step is required and it works offline.
 
 ## Quick start
 

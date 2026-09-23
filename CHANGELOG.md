@@ -5,6 +5,10 @@ All notable changes to this project are documented here. The format follows
 [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
+### Changed
+- NLTK `stopwords` and English `punkt_tab` data now ship inside the package
+  (`sumplicity/data`); no download is needed. Requires `nltk>=3.9`.
+
 
 ## [0.1.0] - 2026-09-22
 ### Added

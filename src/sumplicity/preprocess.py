@@ -5,33 +5,20 @@ Every summarizer in Sumplicity consumes the TF matrix produced here, so
 preprocessing is fully separated from the scoring mathematics.
 """
 import string
+from pathlib import Path
 from typing import List, Union
 
+import nltk
 import numpy as np
 from nltk.corpus import stopwords
 from nltk.stem import SnowballStemmer
 from nltk.tokenize import sent_tokenize, word_tokenize
 
-_NLTK_RESOURCES = {
-    "punkt": "tokenizers/punkt",
-    "punkt_tab": "tokenizers/punkt_tab",
-    "stopwords": "corpora/stopwords",
-}
-
-
-def ensure_nltk_data(quiet: bool = True) -> None:
-    """Download the NLTK resources Sumplicity needs if they are missing.
-
-    To use a local/offline copy instead, place the resources in a directory
-    and add it with ``nltk.data.path.append("<dir>")`` before importing.
-    """
-    import nltk
-
-    for package, resource in _NLTK_RESOURCES.items():
-        try:
-            nltk.data.find(resource)
-        except LookupError:
-            nltk.download(package, quiet=quiet)
+# NLTK resources (stopwords, English punkt_tab) ship inside the package, so no
+# download is needed. Searched first, ahead of any user nltk_data directories.
+NLTK_DATA_DIR = str(Path(__file__).resolve().parent / "data")
+if NLTK_DATA_DIR not in nltk.data.path:
+    nltk.data.path.insert(0, NLTK_DATA_DIR)
 
 
 class preprocessor:
@@ -47,9 +34,8 @@ class preprocessor:
             self.stop_words = set(stopwords.words(language))
         except LookupError as err:
             raise LookupError(
-                "NLTK stopwords are not installed. Run "
-                "`python -c \"import sumplicity; sumplicity.ensure_nltk_data()\"` "
-                "or append a local nltk_data directory to nltk.data.path."
+                f"No NLTK stopwords found for language {language!r} in the "
+                f"bundled data ({NLTK_DATA_DIR}) or on nltk.data.path."
             ) from err
 
     def _keep(self, token: str) -> bool:

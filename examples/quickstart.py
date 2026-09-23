@@ -1,8 +1,6 @@
 """Summarize a short passage with every Sumplicity algorithm."""
 import sumplicity
 
-sumplicity.ensure_nltk_data()
-
 TEXT = """
 The river flooded the valley after three days of heavy rain. Emergency crews
 evacuated residents from the flooded valley towns. Rainfall totals in the valley
