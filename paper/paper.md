@@ -9,14 +9,12 @@ tags:
   - retrieval-augmented generation
 authors:
   - name: Osiris J. Terry
-    orcid: 0000-0000-0000-0000   # TODO: replace with real ORCID
+    orcid: 0009-0004-4453-2874
     corresponding: true
     affiliation: 1
   - name: Christine M. Schubert Kabban
-    orcid: 0000-0000-0000-0000   # TODO
     affiliation: 2
   - name: Kenneth M. Hopkinson
-    orcid: 0000-0000-0000-0000   # TODO
     affiliation: 1
 affiliations:
   - name: Department of Electrical and Computer Engineering, Air Force Institute of Technology, United States
@@ -113,40 +111,59 @@ vector in place of recomputing statistics from text, and TextRank and LexRank
 share one PageRank implementation that differs only in the similarity function.
 `summarize` accepts either a raw string or a list of pre-chunked strings, so the
 same code can rank sentences, paragraphs, or passages returned by a retriever.
+The English NLTK tokenizer model and stop-word list are bundled with the package,
+so it runs on offline and air-gapped systems without a separate download step.
 
 # Research impact statement
 
-Sumplicity was developed for, and used in, a benchmark study comparing classical
-extractive summarizers against Sumy [@terry2026]. On 1,000 CNN/Daily Mail articles
-[@hermann2015] evaluated with ROUGE [@lin2004], Sumplicity's implementations
-obtained higher ROUGE-1, ROUGE-2, and ROUGE-L F1 scores than Sumy's for every
-algorithm (TODO: insert the single average improvement figure you settle on).
-Sumplicity was also faster: on average 12.7 times faster for articles of about
-1,000 tokens and 101.5 times faster for books of about 64,000 tokens.
-(TODO: commit the benchmark scripts to `benchmarks/` and state here that the
-results can be reproduced from them.)
+Classical summarizers are used throughout the literature as baselines, pipeline
+components, and objects of comparison, and in the studies we reviewed they are
+most often taken from Sumy
+[@lamsiyah2021; @shukla2022; @meng2021; @gusev2020; @vimalaksha2018; @barua2019;
+@bhattacharya2021; @feijo2018; @sharma2021; @giarelis2023]. Results obtained this
+way depend on implementation details that the reporting papers cannot inspect.
+Sumplicity was built to supply these baselines in a form that can be audited and
+reproduced, and it was the implementation used in a benchmark study comparing
+classical extractive summarizers with Sumy [@terry2026].
 
-TODO: add concrete evidence of use beyond the benchmark study (other projects,
-theses, or groups using the library, integrations, downloads). JOSS requires
-realized use, not planned use.
+In that study, both libraries were run on the same 1,000 CNN/Daily Mail articles
+[@hermann2015] and scored with ROUGE-1, ROUGE-2, and ROUGE-L F1 [@lin2004].
+Sumplicity scored higher than Sumy on all three metrics for all seven algorithms,
+with an average relative improvement of about 19%. The gains were largest for
+KL-Sum, LSA, graph reduction, and TextRank, and smallest for Luhn and LexRank.
+Sumplicity's seven algorithms also scored within a narrow range of one another
+(ROUGE-1 F1 between 0.221 and 0.244), while Sumy's varied more widely (0.191 to
+0.234), which suggests that much of the variation between methods reported with
+Sumy comes from differences in implementation.
+
+Runtime was measured on the same news articles (about 1,000 tokens each) and on
+a collection of books averaging about 64,000 tokens [@mousa_books]. Sumplicity
+produced summaries in roughly 0.012 to 0.017 seconds per article for every
+algorithm and was 2 to 10 times faster than Sumy on articles. On books, the
+speedup grew to between 2 and 239 times depending on the algorithm, with the
+largest gains for the iterative and graph-based methods (KL-Sum, graph
+reduction, TextRank, and LexRank), whose Sumy implementations scale poorly with
+document length. These results show that the library is ready for use both as a
+reproducible research baseline and as a fast sentence selector inside retrieval
+and RAG pipelines.
 
 # AI usage disclosure
 
-TODO: review and edit this statement so it is accurate. The core algorithms,
-their matrix formulations, and the benchmark study were designed and written by
-the authors. Claude (Anthropic, Claude Opus 5.5) was used to reorganize the
-original modules into an installable package, introduce the `BaseSummarizer`
-class, fix several defects, draft the test suite, README, contributing guide, and
-continuous-integration configuration, and produce an initial draft of this paper
-from the authors' manuscript. The authors reviewed, edited, and tested all
-AI-assisted code and text, confirmed that refactored algorithms reproduce the
-original outputs, and made all design decisions.
+Generative AI (Claude, Anthropic) was used to help prepare the software
+repository: packaging the authors' existing modules, drafting unit tests,
+continuous-integration workflows, and repository documentation, and to help
+draft this paper from the authors' full-length manuscript. The summarization
+algorithms, their matrix formulations, the benchmark study, and all design
+decisions are the authors' own. The authors reviewed, edited, and tested all
+AI-assisted material and take full responsibility for its accuracy.
 
 # Acknowledgements
 
-TODO: list funding sources and state whether the sponsor had any role in the work,
-or state that the work received no specific funding. The views expressed are those
-of the authors and do not reflect the official policy or position of the United
-States Air Force, the Department of Defense, or the U.S. Government.
+We thank the author of Sumy, whose package made classical extractive
+summarization widely accessible and motivated this work. This work received no
+external funding. The views expressed in
+this paper are those of the authors and do not reflect the official policy or
+position of the United States Air Force, the Department of Defense, or the U.S.
+Government.
 
 # References
