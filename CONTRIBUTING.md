@@ -23,5 +23,5 @@ be registered in `get_all_summarizer()`.
 
 ## Support and maintenance
 
-Sumplicity is maintained by Osiris J. Terry. Issues are typically triaged within
+Sumplicity is maintained by Osiris Terry. Issues are typically triaged within
 two weeks. Releases follow semantic versioning and are listed in `CHANGELOG.md`.
