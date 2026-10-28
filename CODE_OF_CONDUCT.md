@@ -5,5 +5,5 @@ This project adopts the
 as its code of conduct. All contributors and participants are expected to follow it.
 
 Instances of unacceptable behavior may be reported to the maintainer at
-osiris.terry.4@au.af.edu. All reports will be reviewed promptly and handled
+osiris.terry.4@us.af.mil. All reports will be reviewed promptly and handled
 confidentially.
