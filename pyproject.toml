@@ -9,7 +9,7 @@ description = "Transparent, vectorized NumPy implementations of classical extrac
 readme = "README.md"
 license = { file = "LICENSE" }
 authors = [
-  { name = "Osiris J. Terry", email = "osiris.terry.4@au.af.edu" },
+  { name = "Osiris J. Terry", email = "osiris.terry.4@us.af.mil" },
   { name = "Christine M. Schubert Kabban" },
   { name = "Kenneth M. Hopkinson" },
 ]
