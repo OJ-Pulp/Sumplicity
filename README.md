@@ -23,7 +23,7 @@ Included algorithms:
 ## Installation
 
 ```bash
-pip install git+https://github.com/YOUR-USERNAME/sumplicity.git
+pip install git+https://github.com/OJ-Pulp/Sumplicity.git
 ```
 
 The NLTK data Sumplicity needs (`stopwords` and the English `punkt_tab` tokenizer)
@@ -85,7 +85,7 @@ If you use Sumplicity in research, please cite using [CITATION.cff](CITATION.cff
 ## Contributing and support
 
 Bug reports, questions and feature requests go in the
-[issue tracker](https://github.com/YOUR-USERNAME/sumplicity/issues).
+[issue tracker](https://github.com/OJ-Pulp/Sumplicity/issues).
 See [CONTRIBUTING.md](CONTRIBUTING.md) for how to propose changes. This project
 follows the [Contributor Covenant](CODE_OF_CONDUCT.md).
 

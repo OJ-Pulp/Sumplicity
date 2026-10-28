@@ -29,8 +29,8 @@ test = ["pytest>=7"]
 benchmark = ["sumy", "rouge-score", "datasets"]
 
 [project.urls]
-Homepage = "https://github.com/YOUR-USERNAME/sumplicity"
-Issues = "https://github.com/YOUR-USERNAME/sumplicity/issues"
+Homepage = "https://github.com/OJ-Pulp/Sumplicity"
+Issues = "https://github.com/OJ-Pulp/Sumplicity/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]

@@ -4,7 +4,7 @@ Thanks for your interest in improving Sumplicity.
 
 ## Reporting bugs and asking questions
 
-Open an issue at https://github.com/YOUR-USERNAME/sumplicity/issues. For bugs,
+Open an issue at https://github.com/OJ-Pulp/Sumplicity/issues. For bugs,
 include your Python, NumPy and NLTK versions, a minimal input that reproduces the
 problem, and the output you expected.
 
