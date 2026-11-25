@@ -4,6 +4,7 @@ title: "Sumplicity: Transparent, vectorized extractive summarization in Python"
 version: 0.2.0
 date-released: 2026-11-25
 license: MIT
+doi: 10.5281/zenodo.24540692
 repository-code: "https://github.com/OJ-Pulp/Sumplicity"
 authors:
   - family-names: Terry

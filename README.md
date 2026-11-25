@@ -1,6 +1,7 @@
 # Sumplicity
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24540692.svg)](https://doi.org/10.5281/zenodo.24540692)
 
 **Sumplicity** (from *Sumy* to *Simplicity*) is a small, transparent Python library
 of classical extractive summarization algorithms. Every algorithm is written as a
