@@ -1,0 +1,35 @@
+{
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "machine": "arm64",
+  "cpu": "Apple M4 Pro",
+  "physical_cores": 12,
+  "logical_cores": 12,
+  "perf_cores": "8",
+  "efficiency_cores": "4",
+  "ram_gb": 24.0,
+  "python": "3.14.3",
+  "packages": {
+    "sumplicity": "0.1.0",
+    "numpy": "2.5.5",
+    "nltk": "3.10.4",
+    "sumy": "0.14.0",
+    "rouge-score": "0.1.2",
+    "bert-score": "0.3.13",
+    "torch": "2.15.0",
+    "transformers": "5.24.1",
+    "scipy": "1.18.1",
+    "anthropic": "2.14.0",
+    "datasets": "5.2.0",
+    "huggingface-hub": "2.4.0"
+  },
+  "numpy_blas": {
+    "name": "accelerate",
+    "found": true,
+    "version": "unknown",
+    "detection method": "system",
+    "include directory": "unknown",
+    "lib directory": "unknown",
+    "openblas configuration": "unknown",
+    "pc file directory": "unknown"
+  }
+}

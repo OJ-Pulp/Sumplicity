@@ -1,0 +1,54 @@
+% Table 4
+
+\begin{tabular}{lrrrrrrrrrrrr}
+\toprule
+ & \multicolumn{4}{c}{CNN/Daily Mail} & \multicolumn{4}{c}{arXiv} & \multicolumn{4}{c}{BillSum} \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-9}\cmidrule(lr){10-13}
+ & \multicolumn{2}{c}{R-1} & \multicolumn{2}{c}{BERTScore} & \multicolumn{2}{c}{R-1} & \multicolumn{2}{c}{BERTScore} & \multicolumn{2}{c}{R-1} & \multicolumn{2}{c}{BERTScore} \\
+Algorithm & Spl. & Sumy & Spl. & Sumy & Spl. & Sumy & Spl. & Sumy & Spl. & Sumy & Spl. & Sumy \\
+\midrule
+Luhn & .342 & .338$^{\approx}$ & .274 & .272$^{\approx}$ & .320 & \textbf{.323}$^{\approx}$ & .003 & \textbf{.007}$^{\approx}$ & .388 & \textbf{.391}$^{\approx}$ & .070 & .072$^{\approx}$ \\
+SumBasic & \textbf{.346} & .333 & \textbf{.296} & .286 & \textbf{.335} & .305 & \textbf{.117} & .083 & \textbf{.367} & .347 & \textbf{.068} & .042 \\
+KL-Sum & .344 & .345$^{\approx}$ & .249 & \textbf{.279} & .359 & \textbf{.394} & .048 & \textbf{.118} & \textbf{.402} & .378 & .082 & .076 \\
+LSA & .288 & \textbf{.310} & .179 & \textbf{.213} & .298 & \textbf{.373} & $-$.024 & \textbf{.107} & .377 & \textbf{.404} & .063 & \textbf{.099} \\
+Degree & \textbf{.353} & .338 & \textbf{.297} & .270 & \textbf{.377} & .328 & \textbf{.104} & .028 & \textbf{.414} & .382 & \textbf{.104} & .072 \\
+TextRank & \textbf{.352} & .336 & \textbf{.285} & .258 & \textbf{.378} & .331 & \textbf{.088} & .029 & \textbf{.404} & .382 & \textbf{.095} & .071 \\
+LexRank & .349 & .348$^{\approx}$ & .290 & .286$^{\approx}$ & .384 & .387$^{\approx}$ & .111 & .111$^{\approx}$ & .420 & .423$^{\approx}$ & .108 & .112$^{\approx}$ \\
+\bottomrule
+\end{tabular}
+
+% Table 5
+
+\begin{tabular}{l rrr rrr rrr}
+\toprule
+ & \multicolumn{3}{c}{Same components, $k$ sentences} & \multicolumn{3}{c}{Same components, word budget} & \multicolumn{3}{c}{Sumy constructor defaults} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
+Algorithm & CNN & arXiv & Bill & CNN & arXiv & Bill & CNN & arXiv & Bill \\
+\midrule
+Luhn & \textit{$-$1.1} & +1.0 & +0.8 & \textit{$-$0.9} & \textit{+0.1} & \textit{+0.1} & $-$6.2 & $-$5.0 & $-$2.5 \\
+SumBasic & $-$3.8 & $-$9.1 & $-$5.5 & $-$3.7 & $-$9.0 & $-$5.9 & $-$8.7 & $-$18.5 & $-$3.0 \\
+KL-Sum & \textit{+0.3} & +9.8 & $-$6.0 & \textit{$-$1.9} & +6.0 & $-$8.2 & $-$9.9 & $-$5.2 & $-$23.2 \\
+LSA & +7.5 & +25.1 & +7.0 & +5.6 & +9.6 & \textit{$-$1.4} & +5.9 & +10.8 & $-$0.2 \\
+Degree & $-$4.5 & $-$13.0 & $-$7.9 & \textit{$-$2.4} & $-$6.3 & $-$3.5 & $-$16.3 & $-$18.2 & $-$9.4 \\
+TextRank & $-$4.5 & $-$12.3 & $-$5.4 & $-$3.0 & $-$6.7 & $-$3.4 & $-$16.7 & $-$18.6 & $-$6.9 \\
+LexRank & \textit{$-$0.1} & \textit{+1.0} & \textit{+0.7} & \textit{$-$0.4} & \textit{+1.1} & \textit{+0.7} & $-$3.5 & $-$1.5 & $-$1.0 \\
+\bottomrule
+\end{tabular}
+
+% Table 6
+
+\begin{tabular}{l rrr rr rr rr r}
+\toprule
+ & \multicolumn{3}{c}{Scoring time, 64K tokens} & \multicolumn{2}{c}{End to end $\times$} & \multicolumn{2}{c}{Real documents} & \multicolumn{2}{c}{Peak MiB, 64K} & 128K \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}\cmidrule(lr){9-10}
+Algorithm & Spl. (s) & Sumy (s) & $\times$ & 1K & 64K & median $\times$ & range $\times$ & Spl. & Sumy & Spl. (s) \\
+\midrule
+Luhn & 0.01 & 1.1 & 99 & 1.5 & 4 & 35 & 28--57 & 28 & 3 & 0.1 \\
+SumBasic & 0.39 & 2.2 & 6 & 1.3 & 3 & 27 & 20--34 & 65 & 5 & 1.5 \\
+KL-Sum & 0.88 & 152.0 & 173 & 1.0 & 129 & 8 & 7--23 & 162 & 286 & 3.6 \\
+LSA & 6.85 & 12.9 & 2 & 2.0 & 2 & 22 & 10--31 & 183 & 217 & 39.4 \\
+Degree & 0.34 & 15.7 & 47 & 1.4 & 20 & 85 & 44--138 & 72 & 2 & 1.6 \\
+TextRank & 0.61 & 11.4 & 19 & 1.4 & 11 & 83 & 51--133 & 118 & 44 & 3.3 \\
+LexRank & 0.63 & 47.1 & 74 & 2.3 & 43 & 60 & 47--195 & 72 & 18 & 3.6 \\
+\bottomrule
+\end{tabular}

@@ -51,6 +51,31 @@ def cos_sim_mat(tf_matrix: np.ndarray, threshold: float = 0.0) -> np.ndarray:
     sim_matrix[sim_matrix < threshold] = 0
     return sim_matrix
 
+def idf(tf_matrix: np.ndarray) -> np.ndarray:
+    """Inverse document frequency, Eq. 1 of Erkan & Radev (2004):
+    idf_i = log(N / n_i), with each chunk (sentence) treated as a document."""
+    n = (tf_matrix > 0).sum(axis=1)
+    return np.log(tf_matrix.shape[1] / np.maximum(n, 1))
+
+
+def idf_cosine(tf_matrix: np.ndarray) -> np.ndarray:
+    """IDF-modified cosine, Eq. 2 of Erkan & Radev (2004).
+
+    Cosine similarity of tf*idf sentence vectors. Every sentence is similar to
+    itself (diagonal = 1, the self-links of their Section 3.1); a sentence whose
+    tf*idf vector is zero has similarity 0 to every other sentence.
+    """
+    W = tf_matrix * idf(tf_matrix)[:, None]
+    norms = np.linalg.norm(W, axis=0)
+    S = W.T @ W
+    nz = norms > 0
+    S[np.ix_(nz, nz)] /= np.outer(norms[nz], norms[nz])
+    S[~nz, :] = 0.0
+    S[:, ~nz] = 0.0
+    np.fill_diagonal(S, 1.0)
+    return S
+
+
 def overlap_sim_mat(tf_matrix: np.ndarray) -> np.ndarray:
     log_sent_len = np.clip(np.log(np.sum(tf_matrix, axis=0) + 1), 1e-100, None)
     sim_matrix = np.dot(tf_matrix.T, tf_matrix)/np.add.outer(log_sent_len, log_sent_len)

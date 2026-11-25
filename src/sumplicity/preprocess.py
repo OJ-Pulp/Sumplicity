@@ -4,6 +4,7 @@ construction of the term-by-sentence frequency (TF) matrix.
 Every summarizer in Sumplicity consumes the TF matrix produced here, so
 preprocessing is fully separated from the scoring mathematics.
 """
+import re
 import string
 from pathlib import Path
 from typing import List, Union
@@ -28,7 +29,11 @@ class preprocessor:
     (usually sentences).
     """
 
-    def __init__(self, language: str = "english"):
+    #: Default content-token rule: a letter, then letters, apostrophes or hyphens.
+    WORD_PATTERN = r"^[^\W\d_](?:[^\W\d_]|['-])*$"
+
+    def __init__(self, language: str = "english", token_pattern: str = WORD_PATTERN):
+        self.token_pattern = re.compile(token_pattern, re.UNICODE)
         self.stemmer = SnowballStemmer(language)
         try:
             self.stop_words = set(stopwords.words(language))
@@ -39,11 +44,21 @@ class preprocessor:
             ) from err
 
     def _keep(self, token: str) -> bool:
+        """True if a (lower-cased) token is a content word.
+
+        A token is kept when it matches ``token_pattern`` and is not a stop
+        word. The default pattern accepts words that start with a letter and
+        continue with letters, apostrophes or hyphens, so punctuation, quote
+        marks, numbers and abbreviations such as "u.s.c" are dropped.
+        """
         return (
             token not in self.stop_words
-            and token not in string.punctuation
-            and token.strip() != ""
+            and self.token_pattern.match(token) is not None
         )
+
+    def terms(self, chunk: str) -> List[str]:
+        """Lower-cased content tokens of one chunk, before stemming."""
+        return [t for t in (w.lower() for w in word_tokenize(chunk)) if self._keep(t)]
 
     def query_terms(self, text: str, stem: bool = True) -> List[str]:
         """Extracts the query terms from the text."""
@@ -56,26 +71,45 @@ class preprocessor:
                     terms.append(self.stem(token) if stem else token)
         return terms
 
-    def tf(self, text: List[str], include_terms: bool = False, keys: bool = False):
+    #: Codes used in the position matrix returned by ``tf(..., positions=True)``.
+    STOP, PAD = -1, -2
+
+    def tf(self, text: List[str], include_terms: bool = False, keys: bool = False,
+           positions: bool = False):
         """Builds the (terms x chunks) term-frequency matrix.
 
-        Returns the TF matrix, optionally followed by the stemmed keys and/or
-        the first surface form observed for each term.
+        Returns the TF matrix, optionally followed by the stemmed keys, the
+        first surface form observed for each term, and the position matrix
+        (in that order, for the options requested).
+
+        The position matrix ``P`` (chunks x word positions) records word order,
+        which the TF matrix discards: ``P[j, k]`` is the TF row of the k-th
+        word of chunk j, ``STOP`` (-1) for a stop word (it still occupies a
+        position) and ``PAD`` (-2) after the end of the chunk. Punctuation and
+        other non-word tokens are not positions. Luhn's method needs it.
         """
         tokens = self.tokenize(text)
         num_chunks = len(tokens)
         term_dict = {}
+        row = {}
         original_tokens = []
+        sequences = [[] for _ in range(num_chunks)]
 
         for i, chunk in enumerate(tokens):
             for token in chunk:
                 token = token.lower()
-                if self._keep(token):
-                    base_token = self.stem(token)
-                    if base_token not in term_dict:
-                        term_dict[base_token] = np.zeros(num_chunks)
-                        original_tokens.append(token)
-                    term_dict[base_token][i] += 1
+                if self.token_pattern.match(token) is None:
+                    continue
+                if token in self.stop_words:
+                    sequences[i].append(self.STOP)
+                    continue
+                base_token = self.stem(token)
+                if base_token not in term_dict:
+                    row[base_token] = len(term_dict)
+                    term_dict[base_token] = np.zeros(num_chunks)
+                    original_tokens.append(token)
+                term_dict[base_token][i] += 1
+                sequences[i].append(row[base_token])
 
         if not term_dict:
             raise ValueError(
@@ -83,14 +117,17 @@ class preprocessor:
                 "empty or contains only stop words and punctuation."
             )
 
-        tf_matrix = np.vstack(list(term_dict.values()))
-        if include_terms and keys:
-            return tf_matrix, list(term_dict.keys()), original_tokens
-        if include_terms:
-            return tf_matrix, original_tokens
+        out = [np.vstack(list(term_dict.values()))]
         if keys:
-            return tf_matrix, list(term_dict.keys())
-        return tf_matrix
+            out.append(list(term_dict.keys()))
+        if include_terms:
+            out.append(original_tokens)
+        if positions:
+            P = np.full((num_chunks, max(map(len, sequences))), self.PAD, dtype=int)
+            for i, seq in enumerate(sequences):
+                P[i, :len(seq)] = seq
+            out.append(P)
+        return out[0] if len(out) == 1 else tuple(out)
 
     def idf(self, tf: np.ndarray) -> np.ndarray:
         """Computes the IDF score for each term in the document."""

@@ -1,0 +1,26 @@
+[
+  {
+    "kind": "footprint",
+    "lib": "python",
+    "length": 4000,
+    "rss_peak_bytes": 15712256.0,
+    "seconds_incl_import": 2.124928869307041e-06,
+    "cpu_seconds": 0.010673
+  },
+  {
+    "kind": "footprint",
+    "lib": "sumplicity",
+    "length": 4000,
+    "rss_peak_bytes": 129679360.0,
+    "seconds_incl_import": 0.4735195829998702,
+    "cpu_seconds": 0.48341999999999996
+  },
+  {
+    "kind": "footprint",
+    "lib": "sumy",
+    "length": 4000,
+    "rss_peak_bytes": 139231232.0,
+    "seconds_incl_import": 0.5716467919992283,
+    "cpu_seconds": 0.581842
+  }
+]

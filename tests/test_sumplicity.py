@@ -73,9 +73,15 @@ def test_markov_chain_stationary_distribution():
 
 # ---------- summarizers ----------
 
+def make(cls):
+    # KL-Sum stops early when no sentence lowers the divergence (paper §4);
+    # the generic length tests use it without that stopping rule.
+    return cls(stop_early=False) if cls is sumplicity.KL_Sum else cls()
+
+
 @pytest.mark.parametrize("name,cls", ALL)
 def test_returns_top_k_unique_sentences(name, cls):
-    out = cls().summarize(SENTENCES, top_k=3)
+    out = make(cls).summarize(SENTENCES, top_k=3)
     assert len(out) == 3
     assert len(set(out)) == 3
     assert all(s in SENTENCES for s in out)
@@ -88,8 +94,15 @@ def test_string_and_list_inputs_agree(name, cls):
 
 @pytest.mark.parametrize("name,cls", ALL)
 def test_top_k_larger_than_document(name, cls):
-    out = cls().summarize(SENTENCES, top_k=100)
+    out = make(cls).summarize(SENTENCES, top_k=100)
     assert len(out) == len(SENTENCES)
+
+
+@pytest.mark.parametrize("name,cls", ALL)
+def test_max_words_budget(name, cls):
+    out = make(cls).summarize(SENTENCES, top_k=None, max_words=25)
+    assert sum(len(s.split()) for s in out) <= 25
+    assert out == make(cls).summarize(SENTENCES, top_k=len(SENTENCES))[: len(out)]
 
 
 @pytest.mark.parametrize("name,cls", ALL)
@@ -98,30 +111,61 @@ def test_deterministic(name, cls):
 
 
 def test_off_topic_sentence_not_selected_by_centrality_methods():
-    for cls in (sumplicity.LexRank, sumplicity.TextRank, sumplicity.Graph_Reduction):
+    for cls in (sumplicity.LexRank, sumplicity.TextRank, sumplicity.DegreeCentrality):
         top = cls().summarize(SENTENCES, top_k=2)
         assert not any("bakery" in s for s in top)
 
 
 def test_sumbasic_redundancy_penalty():
+    # After the first solar sentence is chosen, its words' probabilities are
+    # squared, so the most probable remaining word is "wind" and the second
+    # pick is a wind sentence rather than the near-duplicate solar sentence.
     docs = [
         "Solar panels convert sunlight into electricity.",
         "Solar panels convert sunlight into electricity efficiently.",
         "Wind turbines generate power from moving air.",
+        "Wind farms are growing.",
     ]
     out = sumplicity.SumBasic().summarize(docs, top_k=2)
-    assert any("Wind" in s for s in out)
+    assert out[0] == docs[0]
+    assert "Wind" in out[1]
 
 
 def test_lsa_matches_full_svd():
     TF = preprocessor().tf(SENTENCES)
-    _, s, Vt = np.linalg.svd(TF)
-    full = np.sum(np.abs(Vt[: len(s)]) * s.reshape(-1, 1), axis=0)
-    expected = [int(i) for i in np.argsort(full)[::-1][:3]]
+    _, s, Vt = np.linalg.svd(TF)               # full SVD gives the same leading factors
+    n = int((s >= 0.5 * s[0]).sum())
+    full = np.sqrt(((Vt[:n] ** 2) * (s[:n, None] ** 2)).sum(axis=0))
+    expected = [int(i) for i in np.argsort(-full, kind="stable")[:3]]
     assert sumplicity.LSA_Sum().rank(TF, 3) == expected
 
 
 def test_registry_complete():
     assert set(get_all_summarizer()) == {
-        "Luhn", "SumBasic", "KL", "LSA", "GraphReduction", "TextRank", "LexRank"
+        "Luhn", "SumBasic", "KL", "LSA", "Degree", "TextRank", "LexRank"
     }
+
+
+def test_graph_reduction_is_deprecated_alias():
+    with pytest.warns(DeprecationWarning):
+        g = sumplicity.Graph_Reduction()
+    assert isinstance(g, sumplicity.DegreeCentrality)
+
+
+def test_position_matrix():
+    TF, keys, P = preprocessor().tf(["The cats chase the cats.", "Dogs sleep."], keys=True, positions=True)
+    cat = keys.index("cat")
+    # the(stop) cats chase the(stop) cats ; punctuation is not a position
+    assert P[0].tolist() == [-1, cat, keys.index("chase"), -1, cat]
+    assert P[1].tolist() == [keys.index("dog"), keys.index("sleep"), -2, -2, -2]
+
+
+def test_token_filter_drops_punctuation_numbers_and_quotes():
+    pp = preprocessor()
+    terms = pp.terms("``The U.S.C. says'' -- in 2014 -- that state-level rules don't apply.")
+    assert terms == ["says", "state-level", "rules", "n't", "apply"]
+
+
+def test_token_pattern_is_configurable():
+    pp = preprocessor(token_pattern=r"^\w+$")
+    assert "2014" in pp.terms("Rules changed in 2014.")

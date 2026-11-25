@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.venv
+.venv-bench/
+.DS_Store
+
+# Benchmarks: logs, superseded runs and regenerable inputs
+benchmarks/logs/
+benchmarks/results/_stale*/
+benchmarks/results/speed/inputs/
+benchmarks/results/rag/
+
+# Raw per-document benchmark output (hundreds of MB). Archived with the
+# release on Zenodo instead of git; regenerate with benchmarks/README.md.
+benchmarks/results/*/rouge*.csv
+benchmarks/results/*/bertscore*.csv
+benchmarks/results/*/selections.jsonl
+
+# Journal submission materials (kept private while under review)
+paper/softwarex/
+paper/revision_plan.md
+paper/results_discussion_notes.md
+paper/algorithm_fidelity_review.md

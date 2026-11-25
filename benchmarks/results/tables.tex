@@ -1,0 +1,59 @@
+% ---- CNN/Daily Mail (k = 3) ----
+\begin{tabular}{l r r r r r r r r}
+\toprule
+ & \multicolumn{4}{c}{Sumplicity} & \multicolumn{4}{c}{Sumy (matched)} \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-9}
+Algorithm & R-1 & R-2 & R-L & BS & R-1 & R-2 & R-L & BS \\
+\midrule
+Luhn & $.342$ & $.132$ & $.307$ & $.274$ & $.338$ & $.130$ & $.303$ & $.272$ \\
+SumBasic & $\mathbf{.346}^{***}$ & $.123$ & $\mathbf{.313}^{**}$ & $\mathbf{.296}^{**}$ & $.333$ & $.118$ & $.303$ & $.286$ \\
+KL-Sum & $.344$ & $.129$ & $.306$ & $.249$ & $.345$ & $.131$ & $.310$ & $\mathbf{.279}^{***}$ \\
+LSA & $.288$ & $.093$ & $.256$ & $.179$ & $\mathbf{.310}^{***}$ & $\mathbf{.105}^{***}$ & $\mathbf{.275}^{***}$ & $\mathbf{.213}^{***}$ \\
+Degree centrality & $\mathbf{.353}^{***}$ & $\mathbf{.140}^{***}$ & $\mathbf{.320}^{***}$ & $\mathbf{.297}^{***}$ & $.338$ & $.130$ & $.302$ & $.270$ \\
+TextRank & $\mathbf{.352}^{***}$ & $\mathbf{.138}^{***}$ & $\mathbf{.315}^{***}$ & $\mathbf{.285}^{***}$ & $.336$ & $.127$ & $.300$ & $.258$ \\
+LexRank & $.349$ & $.132$ & $.315$ & $.290$ & $.348$ & $.129$ & $.314$ & $.286$ \\
+\midrule
+Lead-3 & .392 & .169 & .356 & .298 & -- & -- & -- & -- \\
+Random & .282 & .082 & .252 & .215 & -- & -- & -- & -- \\
+\bottomrule
+\end{tabular}
+
+% ---- arXiv (k = 6) ----
+\begin{tabular}{l r r r r r r r r}
+\toprule
+ & \multicolumn{4}{c}{Sumplicity} & \multicolumn{4}{c}{Sumy (matched)} \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-9}
+Algorithm & R-1 & R-2 & R-L & BS & R-1 & R-2 & R-L & BS \\
+\midrule
+Luhn & $.320$ & $.099$ & $.276$ & $.003$ & $\mathbf{.323}^{***}$ & $.100$ & $\mathbf{.279}^{***}$ & $\mathbf{.007}^{**}$ \\
+SumBasic & $\mathbf{.335}^{***}$ & $\mathbf{.088}^{***}$ & $\mathbf{.297}^{***}$ & $\mathbf{.117}^{***}$ & $.305$ & $.076$ & $.271$ & $.083$ \\
+KL-Sum & $.359$ & $.112$ & $.306$ & $.048$ & $\mathbf{.394}^{***}$ & $\mathbf{.130}^{***}$ & $\mathbf{.345}^{***}$ & $\mathbf{.118}^{***}$ \\
+LSA & $.298$ & $.090$ & $.258$ & $-0.024$ & $\mathbf{.373}^{***}$ & $\mathbf{.105}^{***}$ & $\mathbf{.321}^{***}$ & $\mathbf{.107}^{***}$ \\
+Degree centrality & $\mathbf{.377}^{***}$ & $\mathbf{.122}^{***}$ & $\mathbf{.330}^{***}$ & $\mathbf{.104}^{***}$ & $.328$ & $.105$ & $.284$ & $.028$ \\
+TextRank & $\mathbf{.378}^{***}$ & $\mathbf{.129}^{***}$ & $\mathbf{.328}^{***}$ & $\mathbf{.088}^{***}$ & $.331$ & $.108$ & $.287$ & $.029$ \\
+LexRank & $.384$ & $.124$ & $.335$ & $.111$ & $.387$ & $.125$ & $.338$ & $.111$ \\
+\midrule
+Lead-6 & .347 & .088 & .305 & .130 & -- & -- & -- & -- \\
+Random & .324 & .074 & .284 & .093 & -- & -- & -- & -- \\
+\bottomrule
+\end{tabular}
+
+% ---- BillSum (k = 4) ----
+\begin{tabular}{l r r r r r r r r}
+\toprule
+ & \multicolumn{4}{c}{Sumplicity} & \multicolumn{4}{c}{Sumy (matched)} \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-9}
+Algorithm & R-1 & R-2 & R-L & BS & R-1 & R-2 & R-L & BS \\
+\midrule
+Luhn & $.388$ & $.192$ & $.334$ & $.070$ & $\mathbf{.391}^{***}$ & $.190$ & $\mathbf{.335}^{*}$ & $.072$ \\
+SumBasic & $\mathbf{.367}^{***}$ & $\mathbf{.154}^{***}$ & $\mathbf{.311}^{***}$ & $\mathbf{.068}^{***}$ & $.347$ & $.139$ & $.292$ & $.042$ \\
+KL-Sum & $\mathbf{.402}^{***}$ & $\mathbf{.202}^{***}$ & $\mathbf{.345}^{***}$ & $.082$ & $.378$ & $.160$ & $.316$ & $.076$ \\
+LSA & $.377$ & $.189$ & $.326$ & $.063$ & $\mathbf{.404}^{***}$ & $.176$ & $\mathbf{.337}^{***}$ & $\mathbf{.099}^{***}$ \\
+Degree centrality & $\mathbf{.414}^{***}$ & $\mathbf{.202}^{***}$ & $\mathbf{.354}^{***}$ & $\mathbf{.104}^{***}$ & $.382$ & $.191$ & $.329$ & $.072$ \\
+TextRank & $\mathbf{.404}^{***}$ & $\mathbf{.203}^{***}$ & $\mathbf{.345}^{***}$ & $\mathbf{.095}^{***}$ & $.382$ & $.194$ & $.331$ & $.071$ \\
+LexRank & $.420$ & $.204$ & $.358$ & $.108$ & $.423$ & $.205$ & $.360$ & $.112$ \\
+\midrule
+Lead-4 & .364 & .171 & .308 & .082 & -- & -- & -- & -- \\
+Random & .374 & .150 & .312 & .076 & -- & -- & -- & -- \\
+\bottomrule
+\end{tabular}

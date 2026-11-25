@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sumplicity"
-version = "0.1.0"
+version = "0.2.0"
 description = "Transparent, vectorized NumPy implementations of classical extractive summarization algorithms."
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -29,8 +29,8 @@ test = ["pytest>=7"]
 benchmark = ["sumy", "rouge-score", "datasets"]
 
 [project.urls]
-Homepage = "https://github.com/YOUR-USERNAME/sumplicity"
-Issues = "https://github.com/YOUR-USERNAME/sumplicity/issues"
+Homepage = "https://github.com/OJ-Pulp/Sumplicity"
+Issues = "https://github.com/OJ-Pulp/Sumplicity/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]

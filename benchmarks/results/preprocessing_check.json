@@ -1,0 +1,42 @@
+{
+  "cnn_dailymail": {
+    "documents": 1000,
+    "sentences": 34352,
+    "mismatched_sentences": {
+      "Luhn": 0,
+      "SumBasic": 0,
+      "KL": 0,
+      "LSA": 0,
+      "GraphReduction": 0,
+      "TextRank": 0,
+      "LexRank": 0
+    }
+  },
+  "arxiv": {
+    "documents": 1000,
+    "sentences": 225234,
+    "mismatched_sentences": {
+      "Luhn": 0,
+      "SumBasic": 0,
+      "KL": 0,
+      "LSA": 0,
+      "GraphReduction": 0,
+      "TextRank": 0,
+      "LexRank": 0
+    }
+  },
+  "billsum": {
+    "documents": 1000,
+    "sentences": 33683,
+    "mismatched_sentences": {
+      "Luhn": 0,
+      "SumBasic": 0,
+      "KL": 0,
+      "LSA": 0,
+      "GraphReduction": 0,
+      "TextRank": 0,
+      "LexRank": 0
+    }
+  },
+  "config": "sumplicity"
+}

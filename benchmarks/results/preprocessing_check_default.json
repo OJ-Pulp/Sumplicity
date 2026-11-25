@@ -1,0 +1,275 @@
+{
+  "cnn_dailymail": {
+    "documents": 1000,
+    "sentences": 34352,
+    "mismatched_sentences": {
+      "Luhn": 33370,
+      "SumBasic": 25651,
+      "KL": 33231,
+      "LSA": 25391,
+      "GraphReduction": 25651,
+      "TextRank": 25651,
+      "LexRank": 25651
+    },
+    "first_example": {
+      "Luhn": {
+        "n": 52,
+        "example": "For Celtic, a slow-burning season has seen Ronny Deila\u2019s side raise their game after a stuttering start and eventually rout their nearest rivals.",
+        "only_sumplicity": {},
+        "only_sumy": {
+          "for": 1,
+          "a": 2,
+          "has": 1,
+          "s": 1,
+          "their": 2,
+          "after": 1,
+          "and": 1
+        }
+      },
+      "SumBasic": {
+        "n": 38,
+        "example": "For Celtic, a slow-burning season has seen Ronny Deila\u2019s side raise their game after a stuttering start and eventually rout their nearest rivals.",
+        "only_sumplicity": {
+          "seen": 1
+        },
+        "only_sumy": {}
+      },
+      "KL": {
+        "n": 52,
+        "example": "For Celtic, a slow-burning season has seen Ronny Deila\u2019s side raise their game after a stuttering start and eventually rout their nearest rivals.",
+        "only_sumplicity": {
+          "slow-burn": 1,
+          "seen": 1,
+          "ronni": 1,
+          "rais": 1,
+          "stutter": 1,
+          "eventu": 1,
+          "rival": 1
+        },
+        "only_sumy": {
+          "slow-burning": 1,
+          "ronny": 1,
+          "raise": 1,
+          "stuttering": 1,
+          "eventually": 1,
+          "rivals": 1
+        }
+      },
+      "LSA": {
+        "n": 38,
+        "example": "For Celtic, a slow-burning season has seen Ronny Deila\u2019s side raise their game after a stuttering start and eventually rout their nearest rivals.",
+        "only_sumplicity": {
+          "seen": 1
+        },
+        "only_sumy": {}
+      },
+      "GraphReduction": {
+        "n": 38,
+        "example": "For Celtic, a slow-burning season has seen Ronny Deila\u2019s side raise their game after a stuttering start and eventually rout their nearest rivals.",
+        "only_sumplicity": {
+          "seen": 1
+        },
+        "only_sumy": {}
+      },
+      "TextRank": {
+        "n": 38,
+        "example": "For Celtic, a slow-burning season has seen Ronny Deila\u2019s side raise their game after a stuttering start and eventually rout their nearest rivals.",
+        "only_sumplicity": {
+          "seen": 1
+        },
+        "only_sumy": {}
+      },
+      "LexRank": {
+        "n": 38,
+        "example": "For Celtic, a slow-burning season has seen Ronny Deila\u2019s side raise their game after a stuttering start and eventually rout their nearest rivals.",
+        "only_sumplicity": {
+          "seen": 1
+        },
+        "only_sumy": {}
+      }
+    }
+  },
+  "arxiv": {
+    "documents": 1000,
+    "sentences": 225234,
+    "mismatched_sentences": {
+      "Luhn": 205709,
+      "SumBasic": 153349,
+      "KL": 206748,
+      "LSA": 144058,
+      "GraphReduction": 153349,
+      "TextRank": 153349,
+      "LexRank": 153349
+    },
+    "first_example": {
+      "Luhn": {
+        "n": 176,
+        "example": "the lattice boltzmann equation ( lbe ) offers a very attractive way to study complex fluid flows governed by the navier - stokes equations ( for a recent review see , e.g. , @xcite ) .",
+        "only_sumplicity": {},
+        "only_sumy": {
+          "the": 2,
+          "a": 2,
+          "veri": 1,
+          "to": 1,
+          "by": 1,
+          "for": 1
+        }
+      },
+      "SumBasic": {
+        "n": 126,
+        "example": "the lattice boltzmann equation ( lbe ) offers a very attractive way to study complex fluid flows governed by the navier - stokes equations ( for a recent review see , e.g. , @xcite ) .",
+        "only_sumplicity": {
+          "way": 1,
+          "see": 1
+        },
+        "only_sumy": {}
+      },
+      "KL": {
+        "n": 174,
+        "example": "the lattice boltzmann equation ( lbe ) offers a very attractive way to study complex fluid flows governed by the navier - stokes equations ( for a recent review see , e.g. , @xcite ) .",
+        "only_sumplicity": {
+          "lattic": 1,
+          "equat": 2,
+          "offer": 1,
+          "attract": 1,
+          "way": 1,
+          "studi": 1,
+          "flow": 1,
+          "govern": 1,
+          "stoke": 1,
+          "see": 1
+        },
+        "only_sumy": {
+          "lattice": 1,
+          "equation": 1,
+          "offers": 1,
+          "attractive": 1,
+          "study": 1,
+          "flows": 1,
+          "governed": 1,
+          "stokes": 1,
+          "equations": 1
+        }
+      },
+      "LSA": {
+        "n": 112,
+        "example": "the lattice boltzmann equation ( lbe ) offers a very attractive way to study complex fluid flows governed by the navier - stokes equations ( for a recent review see , e.g. , @xcite ) .",
+        "only_sumplicity": {
+          "way": 1,
+          "see": 1
+        },
+        "only_sumy": {}
+      },
+      "GraphReduction": {
+        "n": 126,
+        "example": "the lattice boltzmann equation ( lbe ) offers a very attractive way to study complex fluid flows governed by the navier - stokes equations ( for a recent review see , e.g. , @xcite ) .",
+        "only_sumplicity": {
+          "way": 1,
+          "see": 1
+        },
+        "only_sumy": {}
+      },
+      "TextRank": {
+        "n": 126,
+        "example": "the lattice boltzmann equation ( lbe ) offers a very attractive way to study complex fluid flows governed by the navier - stokes equations ( for a recent review see , e.g. , @xcite ) .",
+        "only_sumplicity": {
+          "way": 1,
+          "see": 1
+        },
+        "only_sumy": {}
+      },
+      "LexRank": {
+        "n": 126,
+        "example": "the lattice boltzmann equation ( lbe ) offers a very attractive way to study complex fluid flows governed by the navier - stokes equations ( for a recent review see , e.g. , @xcite ) .",
+        "only_sumplicity": {
+          "way": 1,
+          "see": 1
+        },
+        "only_sumy": {}
+      }
+    }
+  },
+  "billsum": {
+    "documents": 1000,
+    "sentences": 33683,
+    "mismatched_sentences": {
+      "Luhn": 31939,
+      "SumBasic": 25782,
+      "KL": 33210,
+      "LSA": 25588,
+      "GraphReduction": 25782,
+      "TextRank": 25782,
+      "LexRank": 25782
+    },
+    "first_example": {
+      "Luhn": {
+        "n": 26,
+        "example": "This Act may be cited as the ``Railroad Safety Improvement Act of 2005''.",
+        "only_sumplicity": {},
+        "only_sumy": {
+          "this": 1,
+          "be": 1,
+          "as": 1,
+          "the": 1,
+          "of": 1
+        }
+      },
+      "SumBasic": {
+        "n": 24,
+        "example": "This Act may be cited as the ``Railroad Safety Improvement Act of 2005''.",
+        "only_sumplicity": {
+          "may": 1
+        },
+        "only_sumy": {}
+      },
+      "KL": {
+        "n": 28,
+        "example": "This Act may be cited as the ``Railroad Safety Improvement Act of 2005''.",
+        "only_sumplicity": {
+          "may": 1,
+          "cite": 1,
+          "safeti": 1,
+          "improv": 1
+        },
+        "only_sumy": {
+          "cited": 1,
+          "safety": 1,
+          "improvement": 1
+        }
+      },
+      "LSA": {
+        "n": 24,
+        "example": "This Act may be cited as the ``Railroad Safety Improvement Act of 2005''.",
+        "only_sumplicity": {
+          "may": 1
+        },
+        "only_sumy": {}
+      },
+      "GraphReduction": {
+        "n": 24,
+        "example": "This Act may be cited as the ``Railroad Safety Improvement Act of 2005''.",
+        "only_sumplicity": {
+          "may": 1
+        },
+        "only_sumy": {}
+      },
+      "TextRank": {
+        "n": 24,
+        "example": "This Act may be cited as the ``Railroad Safety Improvement Act of 2005''.",
+        "only_sumplicity": {
+          "may": 1
+        },
+        "only_sumy": {}
+      },
+      "LexRank": {
+        "n": 24,
+        "example": "This Act may be cited as the ``Railroad Safety Improvement Act of 2005''.",
+        "only_sumplicity": {
+          "may": 1
+        },
+        "only_sumy": {}
+      }
+    }
+  },
+  "config": "default"
+}
