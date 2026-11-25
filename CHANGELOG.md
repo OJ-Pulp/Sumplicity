@@ -21,7 +21,11 @@ All notable changes to this project are documented here. The format follows
 - `LexRank`: IDF-modified cosine, 0.1 threshold with self-links, damping per
   Eq. 9 of Erkan & Radev; exact stationary distribution via one linear solve.
   `continuous=True` gives continuous LexRank.
-- Ties now go to the earlier sentence (stable ordering).
+- Ties now go to the earlier sentence. Scores are rounded to 12 significant
+  digits before ranking, so mathematically equal scores that differ only by
+  floating-point rounding (which varies between x86 and ARM processors) are
+  treated as ties; the same text gives the same summary on every machine.
+- Requires Python 3.10 or later (Python 3.9 reached end of life in October 2025).
 
 ### Added
 - `DegreeCentrality` (Erkan & Radev 2004, §3.1); `Graph_Reduction` is now a

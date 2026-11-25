@@ -20,9 +20,30 @@ from .preprocess import preprocessor
 TextInput = Union[str, List[str]]
 
 
+def _snap(x, digits: int = 12) -> np.ndarray:
+    """Round scores to ``digits`` significant digits (relative to the largest).
+
+    Mathematically equal scores can differ in the last bits depending on the
+    processor (e.g. x86 vs. ARM summation order), which would make the order
+    of tied sentences machine-dependent. Snapping them to a common value lets
+    ties be broken by position instead, so every machine gives the same summary.
+    """
+    x = np.asarray(x, dtype=float)
+    finite = np.isfinite(x)
+    if not finite.any():
+        return x
+    scale = np.max(np.abs(x[finite]))
+    if scale == 0:
+        return x
+    quantum = 10.0 ** (np.floor(np.log10(scale)) - digits + 1)
+    out = x.copy()
+    out[finite] = np.round(x[finite] / quantum) * quantum
+    return out
+
+
 def _top(scores: np.ndarray, top_k: int) -> List[int]:
     """Indices of the ``top_k`` highest scores; ties go to the earlier sentence."""
-    return [int(i) for i in np.argsort(-np.asarray(scores, dtype=float), kind="stable")[:top_k]]
+    return [int(i) for i in np.argsort(-_snap(scores), kind="stable")[:top_k]]
 
 
 class BaseSummarizer:
@@ -140,12 +161,12 @@ class SumBasic(BaseSummarizer):
             present = A[:, available].any(axis=1)
             candidates = np.zeros_like(available)
             if present.any():
-                best_word = np.argmax(np.where(present, p, -np.inf))
+                best_word = np.argmax(_snap(np.where(present, p, -np.inf)))
                 candidates = available & (A[best_word] > 0)
             if not candidates.any():          # only empty sentences remain
                 candidates = available
             idx = np.flatnonzero(candidates)
-            k = int(idx[np.argmax(weight[idx])])
+            k = int(idx[np.argmax(_snap(weight[idx]))])
             chosen.append(k)
             available[k] = False
             p = np.where(A[:, k] > 0, p ** 2, p)
@@ -180,7 +201,7 @@ class KL_Sum(BaseSummarizer):
         while len(chosen) < min(top_k, TF.shape[1]):
             idx = np.flatnonzero(available)
             kl = self._kl(TF[:, idx] + s[:, None], p)
-            b = int(np.argmin(kl))
+            b = int(np.argmin(_snap(kl)))
             if self.stop_early and kl[b] >= current:
                 break
             k = int(idx[b])

@@ -14,6 +14,7 @@ import pytest
 from sumplicity import (DegreeCentrality, KL_Sum, LexRank, LSA_Sum, Luhn_sum,
                         SumBasic, TextRank, preprocessor)
 from sumplicity._math import idf_cosine
+from sumplicity.summarizers import _snap
 
 TEXT = (
     "The river flooded the valley after three days of heavy rain. "
@@ -32,8 +33,20 @@ T, N = TF.shape
 
 
 def order(scores, k):
-    """Indices of the k highest scores, earlier sentence first on ties."""
-    return sorted(range(len(scores)), key=lambda j: (-scores[j], j))[:k]
+    """Indices of the k highest scores, earlier sentence first on ties.
+
+    Scores are snapped to 12 significant digits first (the library's tie rule),
+    so values that differ only by floating-point rounding count as ties.
+    """
+    snapped = _snap(scores)
+    return sorted(range(len(scores)), key=lambda j: (-snapped[j], j))[:k]
+
+
+def first_max(items, values):
+    """Item with the highest snapped value; the earliest item on ties."""
+    snapped = _snap(values)
+    best = max(snapped)
+    return next(it for it, v in zip(items, snapped) if v == best)
 
 
 # ------------------------------------------------------------------ Luhn
@@ -83,10 +96,10 @@ def sumbasic_loop(TF, k):
     chosen = []
     while len(chosen) < k:
         remaining = [j for j in range(N) if j not in chosen]
-        top_word = max((i for j in remaining for i in words[j]), key=lambda i: (p[i], -i))
+        present = sorted({i for j in remaining for i in words[j]})
+        top_word = first_max(present, [p[i] for i in present])
         cands = [j for j in remaining if top_word in words[j]]
-        weight = {j: sum(p[i] for i in words[j]) / len(words[j]) for j in cands}
-        j = max(cands, key=lambda j: (weight[j], -j))
+        j = first_max(cands, [sum(p[i] for i in words[j]) / len(words[j]) for j in cands])
         chosen.append(j)
         for i in words[j]:
             p[i] = p[i] ** 2
@@ -113,16 +126,14 @@ def kl_loop(TF, k, lam=0.01):
     s = [0.0] * T
     chosen, current = [], math.inf
     while len(chosen) < k:
-        best = None
-        for j in range(N):
-            if j in chosen:
-                continue
+        cands, kls = [j for j in range(N) if j not in chosen], []
+        for j in cands:
             c = [s[i] + TF[i, j] for i in range(T)]
             tot = sum(c)
             q = [(1 - lam) * (c[i] / tot if tot else 0) + lam * p[i] for i in range(T)]
-            kl = sum(p[i] * math.log(p[i] / q[i]) for i in range(T))
-            if best is None or kl < best[0]:
-                best = (kl, j)
+            kls.append(sum(p[i] * math.log(p[i] / q[i]) for i in range(T)))
+        j_best = first_max(cands, [-v for v in kls])  # lowest divergence
+        best = (kls[cands.index(j_best)], j_best)
         if best[0] >= current:
             break
         current = best[0]
@@ -254,3 +265,14 @@ def test_lexrank_matches_power_method():
 
 def test_continuous_lexrank_runs():
     assert len(LexRank(continuous=True).rank(TF, 3)) == 3
+
+
+# ------------------------------------------------------------------ ties
+def test_ties_are_machine_independent():
+    # Scores that differ only in the last bits (as on different processors)
+    # must rank as exact ties, broken by sentence position.
+    base = np.array([0.3, 0.11364214059632786, 0.2, 0.11364214059632786])
+    noisy = base.copy()
+    noisy[3] += 2e-17
+    from sumplicity.summarizers import _top
+    assert _top(base, 4) == _top(noisy, 4) == [0, 2, 1, 3]
